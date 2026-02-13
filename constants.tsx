@@ -43,116 +43,51 @@ export const SECTORS = [
 
 export const MOCK_PROJECTS: Project[] = [
   {
-    id: 'p1',
-    title: 'NeoWallet Digital Banking',
-    description: 'A multi-currency digital wallet with real-time transaction processing.',
+    id: 'fin-1',
+    title: 'Wallet System',
+    description: 'Core digital wallet implementation allowing users to hold, deposit, and withdraw virtual currency.',
+    sector: SectorType.FINTECH,
+    difficulty: 'Beginner',
+    brd: '# Wallet System BRD\nPlaceholder Business Requirement Document for the Wallet System.',
+    architecture: '# Wallet System Architecture\nPlaceholder System Architecture for a simple Wallet System.',
+    database: '# Wallet System Database\nPlaceholder Database Schema for Wallet users and balances.',
+    api: '# Wallet System APIs\nPlaceholder REST API Endpoints for deposits and withdrawals.',
+    tasks: [
+      { id: 't1', title: 'User Account Setup', description: 'Create basic user and account model.', status: 'todo' },
+      { id: 't2', title: 'Deposit Functionality', description: 'Implement basic balance increment logic.', status: 'todo' },
+      { id: 't3', title: 'Withdrawal Logic', description: 'Implement balance checks and decrement logic.', status: 'todo' }
+    ]
+  },
+  {
+    id: 'fin-2',
+    title: 'Payment Gateway',
+    description: 'Integrate external providers and handle merchant transaction flows securely.',
+    sector: SectorType.FINTECH,
+    difficulty: 'Intermediate',
+    brd: '# Payment Gateway BRD\nPlaceholder Business Requirement Document for the Payment Gateway.',
+    architecture: '# Payment Gateway Architecture\nPlaceholder System Architecture for a secure Payment Gateway integration.',
+    database: '# Payment Gateway Database\nPlaceholder Database Schema for transactions and merchant accounts.',
+    api: '# Payment Gateway APIs\nPlaceholder API Endpoints for processing payments and webhooks.',
+    tasks: [
+      { id: 't4', title: 'Provider Integration', description: 'Set up mock API calls to external payment providers.', status: 'todo' },
+      { id: 't5', title: 'Secure Checkout Flow', description: 'Implement tokenization for sensitive payment data.', status: 'todo' },
+      { id: 't6', title: 'Webhook Listener', description: 'Handle asynchronous payment notifications.', status: 'todo' }
+    ]
+  },
+  {
+    id: 'fin-3',
+    title: 'Ledger & Reconciliation',
+    description: 'High-scale double-entry accounting system to ensure zero balance discrepancies.',
     sector: SectorType.FINTECH,
     difficulty: 'Advanced',
-    brd: `
-# Business Requirement Document (BRD)
-## Project Overview
-NeoWallet aims to provide users with a secure way to hold multiple fiat currencies and perform instant peer-to-peer transfers.
-
-## Core Features
-1. **User Onboarding**: KYC integration and multi-factor authentication.
-2. **Account Management**: Support for USD, EUR, and GBP balances.
-3. **Internal Transfers**: Instant P2P transfers using email or phone number.
-4. **Transaction History**: Searchable and filterable record of all movements.
-
-## Target Audience
-Young professionals and digital nomads requiring low-fee currency exchange and instant transfers.
-`,
-    architecture: `
-# System Architecture
-The system follows a microservices pattern to ensure scalability and isolation of sensitive financial data.
-
-## Components
-- **Identity Service**: Handles Auth and JWT generation.
-- **Wallet Engine**: Core ledger managing atomic balance updates.
-- **Notification Service**: Real-time updates via WebSockets.
-- **API Gateway**: Entry point for mobile and web clients.
-
-## High-Level Flow
-1. Client requests transfer.
-2. Gateway validates JWT.
-3. Wallet Engine initiates 2PC (Two-Phase Commit) to ensure consistency.
-4. Ledger updated, response sent.
-`,
-    database: `
-# Database Design (PostgreSQL)
-## Schema: Accounts
-| Column | Type | Description |
-| :--- | :--- | :--- |
-| id | UUID | Primary Key |
-| user_id | UUID | Foreign Key to Users |
-| currency | VARCHAR(3) | ISO Currency Code |
-| balance | DECIMAL | Current balance |
-
-## Schema: Transactions
-| Column | Type | Description |
-| :--- | :--- | :--- |
-| id | UUID | Primary Key |
-| sender_id | UUID | FK to Users |
-| receiver_id | UUID | FK to Users |
-| amount | DECIMAL | Amount transferred |
-| status | VARCHAR | SUCCESS, PENDING, FAILED |
-`,
-    api: `
-# API Contract (REST)
-## POST /api/v1/transfers
-Initiates a transfer between two users.
-
-**Request Body**
-\`\`\`json
-{
-  "recipient_id": "uuid",
-  "amount": 100.00,
-  "currency": "USD"
-}
-\`\`\`
-
-**Response (200 OK)**
-\`\`\`json
-{
-  "transaction_id": "tx_9921",
-  "status": "COMPLETED",
-  "timestamp": "2023-10-01T10:00:00Z"
-}
-\`\`\`
-`,
+    brd: '# Ledger & Reconciliation BRD\nPlaceholder Business Requirement Document for an Advanced Ledger System.',
+    architecture: '# Ledger & Reconciliation Architecture\nPlaceholder System Architecture for distributed double-entry accounting.',
+    database: '# Ledger & Reconciliation Database\nPlaceholder Database Schema for Immutable Ledgers and Audit Trails.',
+    api: '# Ledger & Reconciliation APIs\nPlaceholder API Endpoints for auditing and reconciliation reports.',
     tasks: [
-      { id: 't1', title: 'Setup Database Schema', description: 'Implement PostgreSQL migrations for Accounts and Transactions.', status: 'done' },
-      { id: 't2', title: 'Implement Ledger Service', description: 'Create atomic transfer logic with ACID properties.', status: 'in-progress' },
-      { id: 't3', title: 'API Gateway Auth', description: 'Integrate JWT validation middleware.', status: 'todo' },
-      { id: 't4', title: 'Webhook System', description: 'Build an event-driven notification service.', status: 'todo' },
-    ]
-  },
-  {
-    id: 'p2',
-    title: 'MarketFlow Multi-Vendor',
-    description: 'An enterprise-scale marketplace supporting thousands of vendors.',
-    sector: SectorType.ECOMMERCE,
-    difficulty: 'Intermediate',
-    brd: '# MarketFlow BRD\nFull-featured marketplace with inventory management.',
-    architecture: '# MarketFlow Architecture\nMonolithic core with serverless workers for image processing.',
-    database: '# MarketFlow DB\nRelational schema for products, orders, and vendors.',
-    api: '# MarketFlow API\nGraphQL endpoints for flexible data fetching.',
-    tasks: [
-      { id: 't5', title: 'Product Catalog', description: 'Build the inventory management UI.', status: 'todo' }
-    ]
-  },
-  {
-    id: 'p3',
-    title: 'InsightDash Analytics',
-    description: 'Real-time SaaS dashboard for business metrics and user tracking.',
-    sector: SectorType.SAAS,
-    difficulty: 'Intermediate',
-    brd: '# InsightDash BRD\nDashboard for SaaS metrics like MRR, Churn, and ARPU.',
-    architecture: '# InsightDash Architecture\nEvent-stream processing with Redis and Kafka.',
-    database: '# InsightDash DB\nTime-series database for performance metrics.',
-    api: '# InsightDash API\nREST API for data ingestion.',
-    tasks: [
-      { id: 't6', title: 'Charts Implementation', description: 'Use D3.js to render business metrics.', status: 'todo' }
+      { id: 't7', title: 'Double-Entry Core', description: 'Design an immutable ledger system.', status: 'todo' },
+      { id: 't8', title: 'Reconciliation Engine', description: 'Implement automated daily bank statement matching.', status: 'todo' },
+      { id: 't9', title: 'Anomaly Detection', description: 'Build alerts for balance discrepancies.', status: 'todo' }
     ]
   }
 ];

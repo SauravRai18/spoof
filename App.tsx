@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Sectors from './pages/Sectors';
 import SectorDetail from './pages/SectorDetail';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
     // Route matching
     if (hash === '#/') return <Home />;
     if (hash === '#/login') return <Login />;
+    if (hash === '#/signup') return <Signup />;
     
     // Protected routes
     if (!user && hash !== '#/') {

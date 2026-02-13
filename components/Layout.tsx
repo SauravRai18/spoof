@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <a href="#/" className="flex items-center gap-2">
-                <div className="bg-slate-900 text-white p-1.5 rounded-lg">
+                <div className="bg-slate-900 text-white p-1.5 rounded-lg shadow-sm">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
@@ -54,7 +54,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               ) : (
                 <>
                   <a href="#/login" className="text-slate-600 hover:text-slate-900 font-medium">Log in</a>
-                  <a href="#/login" className="bg-slate-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-slate-800 transition-all">Sign up</a>
+                  <a href="#/signup" className="bg-slate-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-slate-800 transition-all">Sign up</a>
                 </>
               )}
             </div>
