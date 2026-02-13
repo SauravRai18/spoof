@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { authService } from '../services/firebase';
 
@@ -12,11 +11,11 @@ const Signup: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Reusing logic for demo purposes
-      await authService.login(email, password);
+      await authService.signup(email, password, name);
       window.location.hash = '#/dashboard';
-    } catch (err) {
-      alert('Signup failed. Try again.');
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Signup failed. Try again.');
     } finally {
       setLoading(false);
     }

@@ -48,12 +48,121 @@ export const MOCK_PROJECTS: Project[] = [
     description: 'Core digital wallet implementation allowing users to hold, deposit, and withdraw virtual currency.',
     sector: SectorType.FINTECH,
     difficulty: 'Beginner',
-    brd: '# Wallet System BRD\nLearn to build a robust virtual wallet with ACID transactions.',
-    architecture: '# Wallet Architecture\nSystem design for high-concurrency balance updates.',
-    database: '# Wallet Schema\nPostgreSQL tables for Accounts and Ledger entries.',
-    api: '# Wallet APIs\n- POST /wallet/deposit\n- POST /wallet/withdraw',
+    brd: `
+# Business Requirement Document (BRD)
+
+## Overview
+You are hired as a Backend Engineer at a Fintech startup. Your task is to build a robust and secure Wallet System that serves as the foundation for our financial platform.
+
+## Functional Requirements
+- **User Management**: Support User Registration & Login securely.
+- **Wallet Provisioning**: Automatically create a Wallet for each registered user.
+- **Funding**: Allow users to Add Money to their wallet.
+- **P2P Transfers**: Enable users to Transfer money to another user in the system.
+- **Ledger Access**: Provide a view for users to see their full transaction history.
+- **Compliance & Monitoring**: Admin portal capability to monitor all platform transactions.
+
+## Non-Functional Requirements
+- **Scalability**: The system should support up to 10,000 active users.
+- **Integrity**: Prevent double-spending through ACID transactions.
+- **Auditing**: Every transaction must be properly logged for reconciliation.
+- **Security**: All API endpoints must be secure and use industry-standard authentication.
+`,
+    architecture: `
+# System Architecture
+
+## Data Flow
+**Client** → **API Layer** → **Service Layer** → **Database**
+
+## Architectural Decisions
+- **Service Layer**: We use a dedicated Service Layer to encapsulate business logic. This ensures that validation and financial rules are applied consistently regardless of the entry point.
+- **Validation**: Input validation happens at the API Layer (syntax) and Service Layer (business rules like "insufficient funds").
+- **Transaction Logic**: To ensure atomicity, money transfers are handled within a database transaction block. If any step fails (e.g., credit fails after debit), the entire operation rolls back.
+`,
+    database: `
+# Database Design
+
+## Tables
+
+### Users
+- \`id\` (Primary Key, UUID)
+- \`name\` (VARCHAR)
+- \`email\` (VARCHAR, UNIQUE)
+- \`password\` (HASHED)
+
+### Wallets
+- \`id\` (Primary Key, UUID)
+- \`user_id\` (Foreign Key -> Users, INDEXED)
+- \`balance\` (DECIMAL, DEFAULT 0)
+
+### Transactions
+- \`id\` (Primary Key, UUID)
+- \`sender_id\` (Foreign Key -> Users)
+- \`receiver_id\` (Foreign Key -> Users)
+- \`amount\` (DECIMAL)
+- \`status\` (ENUM: SUCCESS, PENDING, FAILED)
+- \`timestamp\` (DATETIME)
+
+## Technical Notes
+- **Indexes**: An index is placed on \`user_id\` in both the Wallets and Transactions tables to ensure fast lookups of balances and history.
+- **Data Integrity**: Foreign Keys are enforced to prevent orphaned wallet records.
+`,
+    api: `
+# API Contract
+
+## Endpoints
+
+### 1. User Registration
+**POST** \`/create-user\`
+\`\`\`json
+{
+  "name": "Alex Engineer",
+  "email": "alex@example.com",
+  "password": "hashed_password"
+}
+\`\`\`
+
+### 2. Fund Wallet
+**POST** \`/add-money\`
+\`\`\`json
+{
+  "wallet_id": "uuid",
+  "amount": 500.00
+}
+\`\`\`
+
+### 3. P2P Transfer
+**POST** \`/transfer-money\`
+\`\`\`json
+{
+  "recipient_id": "uuid",
+  "amount": 150.00
+}
+\`\`\`
+
+### 4. Fetch History
+**GET** \`/transactions/:userId\`
+**Response**:
+\`\`\`json
+[
+  {
+    "id": "tx_1",
+    "amount": 150.00,
+    "status": "SUCCESS",
+    "type": "DEBIT"
+  }
+]
+\`\`\`
+`,
     tasks: [
-      { id: 't1', title: 'Setup Database', description: 'Implement migrations.', status: 'todo' }
+      { id: 't1', title: 'Setup Project & DB', description: 'Initialize repository and implement PostgreSQL migrations for Users, Wallets, and Transactions.', status: 'todo' },
+      { id: 't2', title: 'User Authentication', description: 'Implement JWT-based registration and login flows.', status: 'todo' },
+      { id: 't3', title: 'Wallet Provisioning', description: 'Ensure a wallet is created automatically upon user signup.', status: 'todo' },
+      { id: 't4', title: 'Add Money Logic', description: 'Create service to handle balance increments with validation.', status: 'todo' },
+      { id: 't5', title: 'Atomic Transfer Engine', description: 'Implement the core P2P transfer logic using database transactions to prevent double spending.', status: 'todo' },
+      { id: 't6', title: 'Transaction History API', description: 'Build efficient queries to retrieve a user’s ledger.', status: 'todo' },
+      { id: 't7', title: 'Validation & Error Handling', description: 'Implement global exception handling and request body validation.', status: 'todo' },
+      { id: 't8', title: 'Logging & Auditing', description: 'Integrate a logging framework to track every financial movement.', status: 'todo' }
     ]
   },
   {
@@ -67,7 +176,7 @@ export const MOCK_PROJECTS: Project[] = [
     database: '# Gateway Schema\nTransactional storage for payment intents.',
     api: '# Gateway APIs\n- POST /payments/intent\n- GET /payments/verify',
     tasks: [
-      { id: 't2', title: 'Integrate Stripe SDK', description: 'Mock external provider.', status: 'todo' }
+      { id: 't2_1', title: 'Integrate Stripe SDK', description: 'Mock external provider.', status: 'todo' }
     ]
   },
   {
@@ -81,7 +190,7 @@ export const MOCK_PROJECTS: Project[] = [
     database: '# Ledger Schema\nTime-series ledger entries and snapshots.',
     api: '# Ledger APIs\n- GET /audit/reconcile\n- POST /ledger/entry',
     tasks: [
-      { id: 't3', title: 'Immutable Logic', description: 'Ensure entries cannot be deleted.', status: 'todo' }
+      { id: 't3_1', title: 'Immutable Logic', description: 'Ensure entries cannot be deleted.', status: 'todo' }
     ]
   }
 ];

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { authService } from '../services/firebase';
 
@@ -13,8 +12,9 @@ const Login: React.FC = () => {
     try {
       await authService.login(email, password);
       window.location.hash = '#/dashboard';
-    } catch (err) {
-      alert('Login failed. Try again.');
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Login failed. Try again.');
     } finally {
       setLoading(false);
     }
@@ -25,8 +25,9 @@ const Login: React.FC = () => {
     try {
       await authService.loginWithGithub();
       window.location.hash = '#/dashboard';
-    } catch (err) {
-      alert('GitHub Login failed.');
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'GitHub Login failed.');
     } finally {
       setLoading(false);
     }
