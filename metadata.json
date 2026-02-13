@@ -1,0 +1,8 @@
+{
+  "name": "BuildLikeEngineer",
+  "description": "A professional platform for students to practice real-world industry software projects across Fintech, E-commerce, and SaaS sectors.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
