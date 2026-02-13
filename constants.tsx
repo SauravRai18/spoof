@@ -7,7 +7,7 @@ export const SECTORS = [
     id: 'fintech',
     type: SectorType.FINTECH,
     title: 'Fintech',
-    description: 'Build robust payment gateways, digital wallets, and trading platforms.',
+    description: 'Build robust payment gateways, digital wallets, and ledger systems.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -48,14 +48,12 @@ export const MOCK_PROJECTS: Project[] = [
     description: 'Core digital wallet implementation allowing users to hold, deposit, and withdraw virtual currency.',
     sector: SectorType.FINTECH,
     difficulty: 'Beginner',
-    brd: '# Wallet System BRD\nPlaceholder Business Requirement Document for the Wallet System.',
-    architecture: '# Wallet System Architecture\nPlaceholder System Architecture for a simple Wallet System.',
-    database: '# Wallet System Database\nPlaceholder Database Schema for Wallet users and balances.',
-    api: '# Wallet System APIs\nPlaceholder REST API Endpoints for deposits and withdrawals.',
+    brd: '# Wallet System BRD\nLearn to build a robust virtual wallet with ACID transactions.',
+    architecture: '# Wallet Architecture\nSystem design for high-concurrency balance updates.',
+    database: '# Wallet Schema\nPostgreSQL tables for Accounts and Ledger entries.',
+    api: '# Wallet APIs\n- POST /wallet/deposit\n- POST /wallet/withdraw',
     tasks: [
-      { id: 't1', title: 'User Account Setup', description: 'Create basic user and account model.', status: 'todo' },
-      { id: 't2', title: 'Deposit Functionality', description: 'Implement basic balance increment logic.', status: 'todo' },
-      { id: 't3', title: 'Withdrawal Logic', description: 'Implement balance checks and decrement logic.', status: 'todo' }
+      { id: 't1', title: 'Setup Database', description: 'Implement migrations.', status: 'todo' }
     ]
   },
   {
@@ -64,30 +62,26 @@ export const MOCK_PROJECTS: Project[] = [
     description: 'Integrate external providers and handle merchant transaction flows securely.',
     sector: SectorType.FINTECH,
     difficulty: 'Intermediate',
-    brd: '# Payment Gateway BRD\nPlaceholder Business Requirement Document for the Payment Gateway.',
-    architecture: '# Payment Gateway Architecture\nPlaceholder System Architecture for a secure Payment Gateway integration.',
-    database: '# Payment Gateway Database\nPlaceholder Database Schema for transactions and merchant accounts.',
-    api: '# Payment Gateway APIs\nPlaceholder API Endpoints for processing payments and webhooks.',
+    brd: '# Payment Gateway BRD\nHandle 3D-Secure and multi-merchant routing.',
+    architecture: '# Gateway Architecture\nDistributed system with webhooks and retry logic.',
+    database: '# Gateway Schema\nTransactional storage for payment intents.',
+    api: '# Gateway APIs\n- POST /payments/intent\n- GET /payments/verify',
     tasks: [
-      { id: 't4', title: 'Provider Integration', description: 'Set up mock API calls to external payment providers.', status: 'todo' },
-      { id: 't5', title: 'Secure Checkout Flow', description: 'Implement tokenization for sensitive payment data.', status: 'todo' },
-      { id: 't6', title: 'Webhook Listener', description: 'Handle asynchronous payment notifications.', status: 'todo' }
+      { id: 't2', title: 'Integrate Stripe SDK', description: 'Mock external provider.', status: 'todo' }
     ]
   },
   {
     id: 'fin-3',
-    title: 'Ledger & Reconciliation',
+    title: 'Ledger System',
     description: 'High-scale double-entry accounting system to ensure zero balance discrepancies.',
     sector: SectorType.FINTECH,
     difficulty: 'Advanced',
-    brd: '# Ledger & Reconciliation BRD\nPlaceholder Business Requirement Document for an Advanced Ledger System.',
-    architecture: '# Ledger & Reconciliation Architecture\nPlaceholder System Architecture for distributed double-entry accounting.',
-    database: '# Ledger & Reconciliation Database\nPlaceholder Database Schema for Immutable Ledgers and Audit Trails.',
-    api: '# Ledger & Reconciliation APIs\nPlaceholder API Endpoints for auditing and reconciliation reports.',
+    brd: '# Ledger System BRD\nImmutable record-keeping for every single penny.',
+    architecture: '# Ledger Architecture\nEvent-sourced architecture with strict audit trails.',
+    database: '# Ledger Schema\nTime-series ledger entries and snapshots.',
+    api: '# Ledger APIs\n- GET /audit/reconcile\n- POST /ledger/entry',
     tasks: [
-      { id: 't7', title: 'Double-Entry Core', description: 'Design an immutable ledger system.', status: 'todo' },
-      { id: 't8', title: 'Reconciliation Engine', description: 'Implement automated daily bank statement matching.', status: 'todo' },
-      { id: 't9', title: 'Anomaly Detection', description: 'Build alerts for balance discrepancies.', status: 'todo' }
+      { id: 't3', title: 'Immutable Logic', description: 'Ensure entries cannot be deleted.', status: 'todo' }
     ]
   }
 ];

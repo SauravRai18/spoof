@@ -1,15 +1,11 @@
 
-// This file simulates Firebase Auth and Firestore for the demo environment.
-// In a real scenario, you would import 'firebase/app', 'firebase/auth', etc.
-
-import { User } from '../types';
+import { User, SectorType } from '../types';
 
 class AuthService {
   private user: User | null = null;
   private listeners: ((user: User | null) => void)[] = [];
 
   constructor() {
-    // Check local storage for persistent session
     const stored = localStorage.getItem('be_user');
     if (stored) {
       this.user = JSON.parse(stored);
@@ -25,19 +21,24 @@ class AuthService {
   }
 
   private notify() {
+    if (this.user) {
+      localStorage.setItem('be_user', JSON.stringify(this.user));
+    } else {
+      localStorage.removeItem('be_user');
+    }
     this.listeners.forEach(l => l(this.user));
   }
 
   async login(email: string, pass: string): Promise<User> {
-    // Simulation: any email works for demo
     const user: User = {
       uid: Math.random().toString(36).substr(2, 9),
       email,
       displayName: email.split('@')[0],
-      photoURL: `https://picsum.photos/seed/${email}/200`
+      photoURL: `https://picsum.photos/seed/${email}/200`,
+      completedProjects: [],
+      currentSector: null
     };
     this.user = user;
-    localStorage.setItem('be_user', JSON.stringify(user));
     this.notify();
     return user;
   }
@@ -47,17 +48,31 @@ class AuthService {
       uid: 'gh_' + Math.random().toString(36).substr(2, 9),
       email: 'github_user@example.com',
       displayName: 'GitHub Engineer',
-      photoURL: 'https://picsum.photos/seed/github/200'
+      photoURL: 'https://picsum.photos/seed/github/200',
+      completedProjects: [],
+      currentSector: null
     };
     this.user = user;
-    localStorage.setItem('be_user', JSON.stringify(user));
     this.notify();
     return user;
   }
 
+  async markProjectCompleted(projectId: string) {
+    if (this.user && !this.user.completedProjects.includes(projectId)) {
+      this.user.completedProjects = [...this.user.completedProjects, projectId];
+      this.notify();
+    }
+  }
+
+  async setSector(sector: SectorType) {
+    if (this.user) {
+      this.user.currentSector = sector;
+      this.notify();
+    }
+  }
+
   async logout() {
     this.user = null;
-    localStorage.removeItem('be_user');
     this.notify();
   }
 
